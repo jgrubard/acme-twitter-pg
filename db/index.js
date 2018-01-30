@@ -8,14 +8,14 @@ const SQL_SYNC = `
   DROP TABLE IF EXISTS tweets;
   CREATE TABLE tweets(
     id SERIAL PRIMARY KEY,
-    tweet varchar(255)
+    name varchar(255)
   );
 `;
 
 const SQL_SEED = `
-  INSERT INTO tweets(tweet) values ('foo');
-  INSERT INTO tweets(tweet) values ('bar');
-  INSERT INTO tweets(tweet) values ('bazz');
+  INSERT INTO tweets(name) VALUES ('Mario');
+  INSERT INTO tweets(name) VALUES ('Peach');
+  INSERT INTO tweets(name) VALUES ('Bowser');
 `;
 
 const seed = (cb) => {
@@ -28,7 +28,7 @@ const sync = (cb) => {
 
 const getTweets = (cb) => {
   client.query('SELECT * FROM tweets', (err, result) => {
-    if(err) return cb(err);
+    if (err) return cb(err);
     cb(null, result.rows);
   });
 };
@@ -36,11 +36,9 @@ const getTweets = (cb) => {
 const getTweet = (id, cb) => {
   client.query('SELECT * FROM tweets WHERE id=$1', [id], (err, result) => {
     if (err) return cb(err);
-    // console.log(result.rows[0].tweet);
     cb(null, result.rows.length ? result.rows[0] : null);
   });
 };
-
 
 module.exports = {
   sync,

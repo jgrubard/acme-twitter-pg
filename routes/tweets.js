@@ -6,16 +6,13 @@ module.exports = app;
 app.get('/', (req, res, next) => {
   db.getTweets((err, tweets) => {
     if (err) return next(err);
-    res.render('tweets', { title: 'Tweets', tweets: tweets });
+    res.render('tweets', { title: 'Tweets', tweets });
   });
 });
 
 app.get('/:id', (req, res, next) => {
-  db.getTweet(req.params.id, (err, tweet) => {
+  db.getTweet(req.params.id, (err, name) => {
     if (err) return next(err);
-    res.render('tweet', { title: 'Tweet', tweet });
-
-
-               // `Tweet details to go here -- ${tweet.tweet}`);
+    res.render('tweet', { title: 'Tweet', name });
   });
 });
